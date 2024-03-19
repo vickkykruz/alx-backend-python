@@ -17,6 +17,7 @@ async def async_generator():
         await asyncio.sleep(1)
         yield random.uniform(0, 10)
 
+
 async def print_yielded_values():
     """ This is a function that return the value """
     result = []

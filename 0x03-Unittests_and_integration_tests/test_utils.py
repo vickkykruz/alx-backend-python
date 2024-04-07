@@ -3,6 +3,7 @@ import unittest
 from parameterized import parameterized
 from utils import access_nested_map
 
+
 class TestAccessNestedMap(unittest.TestCase):
     """ This is a test class that handle the test methods """
 
@@ -15,3 +16,16 @@ class TestAccessNestedMap(unittest.TestCase):
         """ This is a method that test if function access_nested_map
         return the value as expected """
         self.assertEqual(access_nested_map(nested_map, path), expected)
+
+    @parameterized.expand([
+        ({}, ("a",), "a"),
+        ({"a": 1}, ("a", "b"), "b")
+    ])
+    def test_access_nested_map_exception(
+            self, nested_map, path, expected_key):
+        """ This is a method that test the function test_access_nested_map_
+        exception and return the value as expected """
+
+        with self.assertRaises(KeyError) as context:
+            access_nested_map(nested_map, path)
+        self.assertEqual(str(context.exception), f"'{expected_key}'")

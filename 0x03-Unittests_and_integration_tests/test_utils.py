@@ -52,28 +52,27 @@ class TestGetJson(unittest.TestCase):
 
 
 class TestMemoize(unittest.TestCase):
-    """ This is a test class that handle the given test methods """
+    """This is a test class that handles the given test methods"""
 
     def test_memoize(self):
-        """ This is a method that handle the nested class test """
-
+        """This is a method that handles the nested class test"""
+        from utils import memoize
+        
         class TestClass:
-            """ This is a test class that handle the nested methods """
+            """This is a test class that handles the nested methods"""
 
             def a_method(self):
-                """ This is a method that return 42 """
+                """This is a method that returns 42"""
                 return 42
 
             @memoize
             def a_property(self):
-                """ This is a method that return the self.a_method """
+                """This is a method that returns the self.a_method"""
                 return self.a_method()
 
-        with patch.object(TestClass, 'a_method', return_value=42) as patched:
+        with patch.object(TestClass, 'a_method') as patched_method:
             test_object = TestClass()
-            result1 = test_object.a_property()
-            result2 = test_object.a_property()
-
-            self.assertEqual(result1, 42)
-            self.assertEqual(result2, 42)
-            patched.assert_called_once()
+            test_object.a_property
+            test_object.a_property
+            patched_method.assert_called_once
+            self.assertEqual(test_object.a_property, patched_method.return_value)

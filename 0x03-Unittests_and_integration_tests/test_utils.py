@@ -56,8 +56,7 @@ class TestMemoize(unittest.TestCase):
 
     def test_memoize(self):
         """This is a method that handles the nested class test"""
-        from utils import memoize
-        
+
         class TestClass:
             """This is a test class that handles the nested methods"""
 
@@ -75,4 +74,5 @@ class TestMemoize(unittest.TestCase):
             test_object.a_property
             test_object.a_property
             patched_method.assert_called_once
-            self.assertEqual(test_object.a_property, patched_method.return_value)
+            self.assertEqual(
+                    test_object.a_property, patched_method.return_value)

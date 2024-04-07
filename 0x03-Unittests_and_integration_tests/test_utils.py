@@ -56,8 +56,10 @@ class TestMemoize(unittest.TestCase):
 
     def test_memoize(self):
         """ This is a method that handle the nested class test """
+
         class TestClass:
             """ This is a test class that handle the nested methods """
+
             def a_method(self):
                 """ This is a method that return 42 """
                 return 42
@@ -67,11 +69,11 @@ class TestMemoize(unittest.TestCase):
                 """ This is a method that return the self.a_method """
                 return self.a_method()
 
-        with patch.object(TestClass, 'a_method') as mock_method:
+        with patch.object(TestClass, 'a_method', return_value=42) as patched:
             test_object = TestClass()
             result1 = test_object.a_property()
             result2 = test_object.a_property()
 
             self.assertEqual(result1, 42)
             self.assertEqual(result2, 42)
-            mock_method.assert_called_once()
+            patched.assert_called_once()

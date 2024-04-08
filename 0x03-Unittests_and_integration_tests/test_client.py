@@ -49,10 +49,20 @@ class TestGithubOrgClient(unittest.TestCase):
            new_callable=PropertyMock)
     def test_public_repos(self, mock_public_repos_url):
         """ This is a method that test the public_repos method """
-        
+
         mock_public_repos_url.return_value = "test"
         with patch('client.get_json') as mock_get_json:
             mock_get_json.return_value = [{"name": "test"}]
             test_class = GithubOrgClient("test")
             self.assertEqual(test_class.public_repos(), ["test"])
             mock_get_json.assert_called_once_with("test")
+
+    @parameterized.expand([
+            ({'license': {'key': 'my_license'}}, 'my_license', True),
+            ({'license': {'key': 'other_license'}}, 'my_license', False),
+    ])
+    def test_has_license(self, repo, license_key, expected_return) -> None:
+        """ This a method that test the has_license method """
+        test_class = GithubOrgClient("test")
+        self.assertEqual(test_class.has_license(repo, license_key),
+                         expected_return)
